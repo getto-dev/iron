@@ -3,19 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="description" content="Научно обоснованный персональный тренер для тренажёрного зала с поддержкой натуралов и фармакологически поддержанных атлетов">
     <title>GymPro Trainer</title>
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#121212">
     <link rel="stylesheet" href="style.css">
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💪</text></svg>">
+    <link rel="apple-touch-icon" href="icons/icon-192.png">
+    <link rel="icon" type="image/svg+xml" href="icons/icon.svg">
 </head>
 <body>
     <div id="app">
-        <!-- Экран анкеты -->
+        <!-- ===== Экран анкеты ===== -->
         <div id="screen-questionnaire" class="screen active">
-            <h1>Анкета тренирующегося</h1>
+            <header class="app-header">
+                <h1>💪 GymPro Trainer</h1>
+                <p class="subtitle">Научный расчёт тренировок по ACSM</p>
+            </header>
+
             <div class="form-group">
-                <label>Пол</label>
+                <label>1. Пол</label>
                 <div class="button-group">
                     <button class="btn" data-gender="male" onclick="setGender('male')">Мужской</button>
                     <button class="btn" data-gender="female" onclick="setGender('female')">Женский</button>
@@ -23,87 +29,203 @@
             </div>
 
             <div class="form-group">
-                <label>Статус</label>
+                <label>2. Статус</label>
                 <div class="button-group">
-                    <button class="btn" data-status="natural" onclick="setStatus('natural')">Натурал</button>
-                    <button class="btn" data-status="enhanced" onclick="setStatus('enhanced')">Химик</button>
+                    <button class="btn" data-status="natural" onclick="setStatus('natural')">🌿 Натурал</button>
+                    <button class="btn" data-status="enhanced" onclick="setStatus('enhanced')">⚗️ Химик</button>
+                </div>
+                <p class="hint-text" id="status-hint">Натурал: консервативный объём, RPE 7-9, полноценное восстановление ЦНС.</p>
+            </div>
+
+            <div class="form-group row-2">
+                <div>
+                    <label>3. Вес (кг)</label>
+                    <input type="number" id="weight" placeholder="80" min="30" max="300" step="0.1" inputmode="decimal">
+                </div>
+                <div>
+                    <label>4. Рост (см)</label>
+                    <input type="number" id="height" placeholder="180" min="120" max="250" step="0.1" inputmode="decimal">
+                </div>
+            </div>
+
+            <!-- Калькулятор 1ПМ по формуле Эпли -->
+            <div class="calculator-block">
+                <label>🧮 Калькулятор 1ПМ (формула Эпли)</label>
+                <div class="calc-row">
+                    <input type="number" id="calc1rm-weight" placeholder="Вес, кг" min="1" step="0.5" inputmode="decimal">
+                    <input type="number" id="calc1rm-reps" placeholder="Повторы" min="1" max="30" inputmode="numeric">
+                    <button class="btn secondary small" onclick="calc1RM()">Рассчитать</button>
+                </div>
+                <div id="calc1rm-result" class="calc-result">Введите вес и количество повторений</div>
+                <div class="calc-apply-row">
+                    <button class="btn small" onclick="apply1RMToField('bench1rm')">→ Жим</button>
+                    <button class="btn small" onclick="apply1RMToField('squat1rm')">→ Присед</button>
+                    <button class="btn small" onclick="apply1RMToField('deadlift1rm')">→ Становая</button>
                 </div>
             </div>
 
             <div class="form-group">
-                <label>Вес (кг)</label>
-                <input type="number" id="weight" placeholder="80" min="1" step="0.1">
+                <label>5. Одноповторный максимум (1ПМ, кг)</label>
+                <input type="number" id="bench1rm" placeholder="Жим лежа" min="1" step="0.5" inputmode="decimal">
+                <input type="number" id="squat1rm" placeholder="Приседания" min="1" step="0.5" inputmode="decimal" style="margin-top:8px">
+                <input type="number" id="deadlift1rm" placeholder="Становая тяга" min="1" step="0.5" inputmode="decimal" style="margin-top:8px">
             </div>
 
             <div class="form-group">
-                <label>Рост (см)</label>
-                <input type="number" id="height" placeholder="180" min="1" step="0.1">
-            </div>
-
-            <div class="form-group">
-                <label>1ПМ жим лежа (кг)</label>
-                <input type="number" id="bench1rm" placeholder="100" min="1" step="0.5">
-            </div>
-
-            <div class="form-group">
-                <label>1ПМ присед (кг)</label>
-                <input type="number" id="squat1rm" placeholder="140" min="1" step="0.5">
-            </div>
-
-            <div class="form-group">
-                <label>1ПМ становая тяга (кг)</label>
-                <input type="number" id="deadlift1rm" placeholder="160" min="1" step="0.5">
-            </div>
-
-            <div class="form-group">
-                <label>Цель тренировок</label>
+                <label>6. Цель тренировок</label>
                 <div class="button-group">
-                    <button class="btn" data-goal="hypertrophy" onclick="setGoal('hypertrophy')">Гипертрофия</button>
-                    <button class="btn" data-goal="strength" onclick="setGoal('strength')">Сила</button>
-                    <button class="btn" data-goal="endurance" onclick="setGoal('endurance')">Выносливость</button>
+                    <button class="btn" data-goal="hypertrophy" onclick="setGoal('hypertrophy')">💪 Гипертрофия</button>
+                    <button class="btn" data-goal="strength" onclick="setGoal('strength')">🏋️ Сила</button>
+                    <button class="btn" data-goal="endurance" onclick="setGoal('endurance')">⏱️ Выносливость</button>
                 </div>
             </div>
 
-            <button class="btn primary" onclick="calculateProgram()">Рассчитать программу</button>
+            <button class="btn primary" onclick="calculateProgram()">Рассчитать программу →</button>
+            <button class="btn secondary" onclick="showHistory()">📊 История тренировок</button>
+            <button class="btn install-btn" id="btn-install" style="display:none">📲 Установить приложение</button>
         </div>
 
-        <!-- Экран выбора тренировки -->
+        <!-- ===== Экран выбора тренировки ===== -->
         <div id="screen-training-select" class="screen">
             <h1>Выберите тренировку</h1>
-            <p id="user-info"></p>
+            <div id="user-info" class="user-info-card"></div>
             <div id="training-buttons" class="button-group vertical">
-                <button class="btn primary" onclick="startTraining('A')">Тренировка A (грудь + спина + ноги)</button>
-                <button class="btn primary" onclick="startTraining('B')">Тренировка B (плечи + руки + ноги)</button>
-                <button class="btn primary" onclick="startTraining('C')">Тренировка C (грудь + спина + ноги)</button>
+                <button class="btn primary" onclick="startTraining('A')">
+                    <span class="btn-title">Тренировка A</span>
+                    <span class="btn-subtitle">Грудь + Спина + Ноги (база)</span>
+                </button>
+                <button class="btn primary" onclick="startTraining('B')">
+                    <span class="btn-title">Тренировка B</span>
+                    <span class="btn-subtitle">Плечи + Руки + Ноги</span>
+                </button>
+                <button class="btn primary" onclick="startTraining('C')">
+                    <span class="btn-title">Тренировка C</span>
+                    <span class="btn-subtitle">Грудь (верх) + Спина + Задняя цепь</span>
+                </button>
             </div>
-            <button class="btn secondary" onclick="backToQuestionnaire()">Назад к анкете</button>
+
+            <div class="stats-row">
+                <div class="stat-block">
+                    <div class="stat-label">Всего</div>
+                    <div class="stat-value" id="stat-total">0</div>
+                </div>
+                <div class="stat-block">
+                    <div class="stat-label">Объём</div>
+                    <div class="stat-value" id="stat-volume">0 кг</div>
+                </div>
+                <div class="stat-block">
+                    <div class="stat-label">Последняя</div>
+                    <div class="stat-value" id="stat-last">—</div>
+                </div>
+            </div>
+
+            <button class="btn secondary" onclick="backToQuestionnaire()">← Назад к анкете</button>
         </div>
 
-        <!-- Экран упражнения -->
+        <!-- ===== Экран упражнения ===== -->
         <div id="screen-exercise" class="screen">
-            <h1 id="exercise-title">Упражнение</h1>
+            <div class="workout-progress-bar">
+                <div class="workout-progress-fill" id="workout-progress-fill"></div>
+                <span class="workout-progress-text" id="workout-progress-text">1 / 9</span>
+            </div>
+
             <div class="exercise-card">
-                <div class="exercise-number" id="exercise-number">1 / 6</div>
-                <div class="exercise-name" id="exercise-name">Жим лёжа</div>
+                <div class="exercise-header">
+                    <div class="exercise-number" id="exercise-number">1 / 9</div>
+                    <div class="exercise-rpe-badge" id="exercise-rpe">RPE 8</div>
+                </div>
+                <div class="exercise-name" id="exercise-name">Жим лёжа в Смите</div>
                 <div class="exercise-muscle" id="exercise-muscle">Грудь, трицепс</div>
+
                 <div class="exercise-params">
                     <div class="param">
                         <span class="param-label">Вес (кг)</span>
-                        <span class="param-value" id="exercise-weight">80</span>
+                        <span class="param-value big" id="exercise-weight">80</span>
                     </div>
                     <div class="param">
                         <span class="param-label">Подходы</span>
-                        <span class="param-value" id="exercise-sets">5</span>
+                        <span class="param-value big" id="exercise-sets">4</span>
                     </div>
                     <div class="param">
                         <span class="param-label">Повторы</span>
-                        <span class="param-value" id="exercise-reps">6-8</span>
+                        <span class="param-value big" id="exercise-reps">6-12</span>
+                    </div>
+                    <div class="param">
+                        <span class="param-label">% 1ПМ</span>
+                        <span class="param-value" id="exercise-pct">75%</span>
                     </div>
                 </div>
-                <div class="exercise-rest" id="exercise-rest">Отдых: 75 сек</div>
+
+                <div class="exercise-rest" id="exercise-rest">Отдых: 90 сек</div>
+
+                <div class="exercise-cue-block">
+                    <div class="cue-title">💡 Техническая подсказка</div>
+                    <div class="cue-text" id="exercise-cue">Контрольная техника, дыхание синхронизировано с фазами.</div>
+                </div>
             </div>
-            <button class="btn primary" onclick="nextExercise()">Следующее упражнение</button>
+
+            <!-- Таймер отдыха -->
+            <div class="rest-timer-card">
+                <div class="timer-label">⏱ Таймер отдыха</div>
+                <div class="timer-display-wrap">
+                    <svg class="timer-ring" viewBox="0 0 100 100">
+                        <circle class="timer-ring-bg" cx="50" cy="50" r="45"></circle>
+                        <circle class="timer-ring-progress" id="timer-ring-progress" cx="50" cy="50" r="45"></circle>
+                    </svg>
+                    <div class="rest-timer-display" id="rest-timer-display">01:30</div>
+                </div>
+                <div class="timer-buttons">
+                    <button class="btn timer-btn primary" id="btn-timer-start" onclick="toggleRestTimer()">▶ Старт</button>
+                    <button class="btn timer-btn" onclick="addRestTime(30)">+30 сек</button>
+                    <button class="btn timer-btn" onclick="resetRestTimer()">↻ Сброс</button>
+                </div>
+            </div>
+
+            <button class="btn primary" id="btn-mark-set" onclick="markSetDone()">✓ Записать подход</button>
+            <div class="nav-buttons">
+                <button class="btn secondary" onclick="prevExercise()">← Назад</button>
+                <button class="btn primary" id="btn-next-exercise" onclick="nextExercise()">Следующее →</button>
+            </div>
             <button class="btn secondary" onclick="backToTrainingSelect()">К списку тренировок</button>
+        </div>
+
+        <!-- ===== Экран сводки тренировки ===== -->
+        <div id="screen-summary" class="screen">
+            <h1>🏆 Тренировка завершена!</h1>
+            <div class="summary-card">
+                <div class="summary-row">
+                    <span class="summary-label">Дата:</span>
+                    <span class="summary-value" id="summary-date">—</span>
+                </div>
+                <div class="summary-row">
+                    <span class="summary-label">Выполнено упражнений:</span>
+                    <span class="summary-value" id="summary-count">0 / 0</span>
+                </div>
+                <div class="summary-row">
+                    <span class="summary-label">Объём нагрузки:</span>
+                    <span class="summary-value" id="summary-volume">0 кг</span>
+                </div>
+            </div>
+            <button class="btn primary" onclick="backToTrainingSelect()">← К списку тренировок</button>
+            <button class="btn secondary" onclick="showHistory()">📊 Посмотреть историю</button>
+        </div>
+
+        <!-- ===== Экран истории тренировок ===== -->
+        <div id="screen-history" class="screen">
+            <h1>📊 История тренировок</h1>
+            <div class="stats-row">
+                <div class="stat-block">
+                    <div class="stat-label">Всего</div>
+                    <div class="stat-value" id="hist-stat-total">0</div>
+                </div>
+                <div class="stat-block">
+                    <div class="stat-label">Объём</div>
+                    <div class="stat-value" id="hist-stat-volume">0</div>
+                </div>
+            </div>
+            <div id="history-list" class="history-list"></div>
+            <button class="btn secondary" onclick="clearHistory()">🗑 Очистить историю</button>
+            <button class="btn primary" onclick="backToQuestionnaire()">← На главную</button>
         </div>
     </div>
 

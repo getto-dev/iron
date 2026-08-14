@@ -1,69 +1,107 @@
 :root {
+    /* === Цветовая палитра: Orange (тёмная спортивная тема) === */
     --bg: #121212;
     --surface: #1e1e1e;
     --surface-light: #2c2c2c;
+    --surface-lighter: #3a3a3a;
     --primary: #ff5722;
     --primary-dark: #e64a19;
+    --primary-light: #ff8a65;
+    --primary-glow: rgba(255, 87, 34, 0.4);
     --text: #ffffff;
     --text-secondary: #b0b0b0;
     --accent: #4caf50;
+    --accent-enhanced: #ba68c8;
+    --warning: #ffb300;
     --error: #f44336;
-    --radius: 12px;
-    --shadow: 0 4px 12px rgba(0,0,0,0.5);
+    --info: #00bcd4;
+    --radius: 14px;
+    --radius-sm: 8px;
+    --shadow: 0 4px 16px rgba(0, 0, 0, 0.55);
+    --shadow-glow: 0 4px 20px var(--primary-glow);
+    --transition: 0.2s ease;
 }
 
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Segoe UI', Roboto, Arial, sans-serif;
+    font-family: 'Segoe UI', -apple-system, Roboto, Arial, sans-serif;
     -webkit-tap-highlight-color: transparent;
 }
 
-body {
+html, body {
     background-color: var(--bg);
     color: var(--text);
-    display: flex;
-    justify-content: center;
-    align-items: center;
     min-height: 100vh;
     margin: 0;
-    padding: 16px;
-    user-select: none;
+    padding: 0;
+}
+
+body {
+    background:
+        radial-gradient(circle at top right, rgba(255, 87, 34, 0.08), transparent 60%),
+        radial-gradient(circle at bottom left, rgba(76, 175, 80, 0.05), transparent 60%),
+        var(--bg);
+    background-attachment: fixed;
 }
 
 #app {
     width: 100%;
-    max-width: 500px;
+    max-width: 520px;
     margin: 0 auto;
+    padding: 16px;
+    min-height: 100vh;
 }
 
+/* === Экраны === */
 .screen {
     display: none;
-    animation: fadeIn 0.3s ease;
+    animation: fadeIn 0.35s ease;
+    padding-bottom: 24px;
 }
-
-.screen.active {
-    display: block;
-}
+.screen.active { display: block; }
 
 @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(20px); }
+    from { opacity: 0; transform: translateY(15px); }
     to { opacity: 1; transform: translateY(0); }
 }
 
-h1 {
-    font-size: 1.8rem;
+/* === Заголовки === */
+.app-header {
     text-align: center;
-    margin-bottom: 20px;
-    color: var(--primary);
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 1px;
+    margin-bottom: 24px;
+    padding-top: 8px;
 }
 
+h1 {
+    font-size: 1.6rem;
+    text-align: center;
+    margin-bottom: 12px;
+    color: var(--primary);
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    text-shadow: 0 0 20px var(--primary-glow);
+}
+
+.subtitle {
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    text-align: center;
+    margin-top: 4px;
+}
+
+/* === Формы === */
 .form-group {
-    margin-bottom: 16px;
+    margin-bottom: 18px;
+}
+
+.form-group.row-2 {
+    display: flex;
+    gap: 12px;
+}
+.form-group.row-2 > div {
+    flex: 1;
 }
 
 .form-group label {
@@ -71,161 +109,521 @@ h1 {
     margin-bottom: 8px;
     font-weight: 600;
     color: var(--text-secondary);
-    font-size: 0.9rem;
+    font-size: 0.88rem;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
 }
 
 input {
     width: 100%;
-    padding: 12px 16px;
+    padding: 13px 16px;
     border: 2px solid var(--surface-light);
-    border-radius: var(--radius);
+    border-radius: var(--radius-sm);
     background-color: var(--surface);
     color: var(--text);
-    font-size: 1.2rem;
+    font-size: 1.05rem;
     outline: none;
-    transition: border-color 0.3s;
+    transition: border-color var(--transition), box-shadow var(--transition);
 }
 
 input:focus {
     border-color: var(--primary);
+    box-shadow: 0 0 0 3px var(--primary-glow);
 }
 
-input::placeholder {
-    color: #666;
-}
+input::placeholder { color: #666; }
 
+/* === Кнопки === */
 .button-group {
     display: flex;
     gap: 8px;
     flex-wrap: wrap;
 }
-
 .button-group.vertical {
     flex-direction: column;
-    gap: 12px;
+    gap: 10px;
 }
 
 .btn {
     flex: 1;
     min-width: 80px;
-    padding: 12px 16px;
+    padding: 13px 16px;
     border: none;
-    border-radius: var(--radius);
+    border-radius: var(--radius-sm);
     background-color: var(--surface-light);
     color: var(--text);
-    font-size: 1rem;
+    font-size: 0.95rem;
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.2s;
+    transition: all var(--transition);
     text-align: center;
     box-shadow: var(--shadow);
+    -webkit-user-select: none;
+    user-select: none;
 }
+.btn:hover { background-color: var(--surface-lighter); transform: translateY(-1px); }
+.btn:active { transform: translateY(0); background-color: #333; }
 
-.btn:hover {
-    background-color: #3a3a3a;
-    transform: translateY(-2px);
-}
-
-.btn:active {
-    transform: translateY(0);
-    background-color: #333;
-}
+.btn.small { padding: 8px 12px; font-size: 0.85rem; min-width: 60px; }
 
 .btn.primary {
-    background-color: var(--primary);
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
     color: white;
-    font-size: 1.2rem;
-    padding: 16px;
-    margin-top: 8px;
-    box-shadow: 0 4px 15px rgba(255, 87, 34, 0.4);
+    font-size: 1.05rem;
+    padding: 15px 16px;
+    margin-top: 12px;
+    box-shadow: var(--shadow-glow);
 }
-
 .btn.primary:hover {
-    background-color: var(--primary-dark);
+    background: linear-gradient(135deg, var(--primary-dark) 0%, #c43c0e 100%);
+    transform: translateY(-2px);
 }
 
 .btn.secondary {
     background-color: transparent;
     border: 2px solid var(--surface-light);
+    color: var(--text-secondary);
     margin-top: 12px;
+}
+.btn.secondary:hover { border-color: var(--primary); color: var(--primary); }
+
+.btn.install-btn {
+    background-color: var(--surface);
+    border: 2px dashed var(--primary);
+    color: var(--primary);
+    margin-top: 16px;
 }
 
 .btn.selected {
-    background-color: var(--primary);
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
     color: white;
     border-color: var(--primary);
+    box-shadow: var(--shadow-glow);
 }
 
-#user-info {
-    text-align: center;
-    margin-bottom: 20px;
+/* Кнопка Enhanced — фиолетовый акцент при выборе */
+.btn[data-status="enhanced"].selected {
+    background: linear-gradient(135deg, var(--accent-enhanced) 0%, #8e24aa 100%);
+    border-color: var(--accent-enhanced);
+    box-shadow: 0 4px 20px rgba(186, 104, 200, 0.4);
+}
+
+/* Структура кнопки тренировки */
+.btn-title { display: block; font-size: 1.05rem; }
+.btn-subtitle {
+    display: block;
+    font-size: 0.8rem;
+    opacity: 0.85;
+    margin-top: 2px;
+    font-weight: 400;
+}
+
+/* === Подсказки === */
+.hint-text {
+    margin-top: 6px;
+    font-size: 0.78rem;
     color: var(--text-secondary);
-    font-size: 0.9rem;
+    line-height: 1.4;
 }
 
-.exercise-card {
-    background-color: var(--surface);
-    border-radius: var(--radius);
-    padding: 24px;
-    margin-bottom: 20px;
-    box-shadow: var(--shadow);
-    text-align: center;
+/* === Калькулятор 1ПМ === */
+.calculator-block {
+    background: var(--surface);
+    border: 1px solid var(--surface-light);
+    border-left: 3px solid var(--info);
+    border-radius: var(--radius-sm);
+    padding: 14px;
+    margin-bottom: 18px;
 }
-
-.exercise-number {
-    font-size: 0.9rem;
-    color: var(--text-secondary);
-    margin-bottom: 8px;
-}
-
-.exercise-name {
-    font-size: 2rem;
+.calculator-block label {
+    color: var(--info);
     font-weight: 700;
-    margin-bottom: 8px;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    letter-spacing: 0.5px;
+    margin-bottom: 10px;
+    display: block;
+}
+.calc-row {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 10px;
+}
+.calc-row input { flex: 1; padding: 10px 12px; font-size: 0.95rem; }
+.calc-row .btn { flex: 0; padding: 10px 14px; }
+.calc-result {
+    background: var(--bg);
+    padding: 10px 12px;
+    border-radius: var(--radius-sm);
+    font-size: 0.9rem;
+    color: var(--text);
+    margin-bottom: 10px;
+    min-height: 32px;
+}
+.calc-result strong { color: var(--info); }
+.calc-hint { color: var(--text-secondary); font-size: 0.78rem; }
+.calc-apply-row {
+    display: flex;
+    gap: 6px;
+}
+.calc-apply-row .btn { flex: 1; font-size: 0.8rem; padding: 7px; }
+
+/* === Карточка пользователя === */
+.user-info-card {
+    background: var(--surface);
+    border-radius: var(--radius);
+    padding: 16px;
+    margin-bottom: 18px;
+    border-left: 4px solid var(--primary);
+    line-height: 1.7;
+    font-size: 0.95rem;
+}
+.user-info-card strong { color: var(--text); }
+
+.status-badge {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 12px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+}
+.status-badge.natural {
+    background: rgba(76, 175, 80, 0.2);
+    color: var(--accent);
+    border: 1px solid var(--accent);
+}
+.status-badge.enhanced {
+    background: rgba(186, 104, 200, 0.2);
+    color: var(--accent-enhanced);
+    border: 1px solid var(--accent-enhanced);
+}
+
+/* === Статистика === */
+.stats-row {
+    display: flex;
+    gap: 8px;
+    margin: 18px 0;
+}
+.stat-block {
+    flex: 1;
+    background: var(--surface);
+    border-radius: var(--radius-sm);
+    padding: 12px;
+    text-align: center;
+}
+.stat-label {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    margin-bottom: 4px;
+}
+.stat-value {
+    font-size: 1.15rem;
+    font-weight: 800;
     color: var(--primary);
 }
 
-.exercise-muscle {
-    font-size: 1rem;
+/* === Прогресс-бар тренировки === */
+.workout-progress-bar {
+    position: relative;
+    height: 28px;
+    background: var(--surface);
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    margin-bottom: 16px;
+}
+.workout-progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary) 0%, var(--primary-light) 100%);
+    width: 10%;
+    transition: width 0.4s ease;
+}
+.workout-progress-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: white;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.6);
+}
+
+/* === Карточка упражнения === */
+.exercise-card {
+    background: linear-gradient(180deg, var(--surface) 0%, #181818 100%);
+    border-radius: var(--radius);
+    padding: 20px;
+    margin-bottom: 16px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--surface-light);
+}
+.exercise-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+.exercise-number {
+    font-size: 0.85rem;
     color: var(--text-secondary);
-    margin-bottom: 20px;
+    background: var(--surface-light);
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-weight: 600;
+}
+.exercise-rpe-badge {
+    background: rgba(0, 188, 212, 0.15);
+    color: var(--info);
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    border: 1px solid var(--info);
+}
+.exercise-name {
+    font-size: 1.7rem;
+    font-weight: 800;
+    margin-bottom: 4px;
+    color: var(--primary);
+    line-height: 1.2;
+}
+.exercise-muscle {
+    font-size: 0.92rem;
+    color: var(--text-secondary);
+    margin-bottom: 18px;
 }
 
 .exercise-params {
-    display: flex;
-    justify-content: space-around;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
     margin-bottom: 16px;
 }
-
 .param {
     display: flex;
     flex-direction: column;
     align-items: center;
+    background: var(--bg);
+    padding: 10px 4px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--surface-light);
 }
-
 .param-label {
-    font-size: 0.8rem;
+    font-size: 0.7rem;
     color: var(--text-secondary);
     margin-bottom: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
 }
-
 .param-value {
-    font-size: 2rem;
+    font-size: 1.1rem;
     font-weight: 700;
     color: var(--text);
 }
-
-.exercise-rest {
-    font-size: 1rem;
-    color: var(--accent);
-    font-weight: 600;
-    padding-top: 8px;
-    border-top: 1px solid var(--surface-light);
+.param-value.big {
+    font-size: 1.7rem;
+    color: var(--primary);
+    text-shadow: 0 0 12px var(--primary-glow);
 }
 
-/* Для мобильных */
-@media (max-width: 400px) {
-    h1 { font-size: 1.5rem; }
-    .exercise-name { font-size: 1.6rem; }
-    .param-value { font-size: 1.6rem; }
+.exercise-rest {
+    font-size: 0.95rem;
+    color: var(--accent);
+    font-weight: 700;
+    padding: 10px 0;
+    border-top: 1px solid var(--surface-light);
+    text-align: center;
+}
+
+/* === Техническая подсказка === */
+.exercise-cue-block {
+    margin-top: 12px;
+    padding: 12px;
+    background: rgba(255, 179, 0, 0.08);
+    border-radius: var(--radius-sm);
+    border-left: 3px solid var(--warning);
+}
+.cue-title {
+    font-size: 0.78rem;
+    color: var(--warning);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    margin-bottom: 4px;
+}
+.cue-text {
+    font-size: 0.88rem;
+    color: var(--text);
+    line-height: 1.5;
+}
+
+/* === Таймер отдыха === */
+.rest-timer-card {
+    background: var(--surface);
+    border: 1px solid var(--surface-light);
+    border-radius: var(--radius);
+    padding: 18px;
+    margin-bottom: 16px;
+    text-align: center;
+}
+.timer-label {
+    font-size: 0.78rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 12px;
+}
+.timer-display-wrap {
+    position: relative;
+    width: 140px;
+    height: 140px;
+    margin: 0 auto 14px;
+}
+.timer-ring {
+    width: 100%;
+    height: 100%;
+    transform: rotate(-90deg);
+}
+.timer-ring-bg {
+    fill: none;
+    stroke: var(--surface-light);
+    stroke-width: 6;
+}
+.timer-ring-progress {
+    fill: none;
+    stroke: var(--primary);
+    stroke-width: 6;
+    stroke-linecap: round;
+    stroke-dasharray: 282.7;
+    stroke-dashoffset: 0;
+    transition: stroke-dashoffset 1s linear;
+    filter: drop-shadow(0 0 6px var(--primary-glow));
+}
+.rest-timer-display {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--text);
+    font-variant-numeric: tabular-nums;
+}
+.rest-timer-display.timer-warning { color: var(--warning); }
+.rest-timer-display.timer-done { color: var(--accent); animation: pulse 0.8s ease 3; }
+
+@keyframes pulse {
+    0%, 100% { transform: translate(-50%, -50%) scale(1); }
+    50% { transform: translate(-50%, -50%) scale(1.15); }
+}
+
+.timer-buttons {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+}
+.timer-btn {
+    flex: 1;
+    padding: 10px 8px;
+    font-size: 0.85rem;
+}
+
+/* === Навигационные кнопки === */
+.nav-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 12px;
+}
+.nav-buttons .btn { margin-top: 0; }
+
+/* === Анимация записи подхода === */
+.done-flash {
+    background: var(--accent) !important;
+    color: white !important;
+    border-color: var(--accent) !important;
+    animation: flash 0.4s ease;
+}
+@keyframes flash {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+/* === Экран сводки === */
+.summary-card {
+    background: var(--surface);
+    border-radius: var(--radius);
+    padding: 20px;
+    margin-bottom: 20px;
+    border-left: 4px solid var(--accent);
+}
+.summary-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--surface-light);
+    font-size: 0.95rem;
+}
+.summary-row:last-child { border-bottom: none; }
+.summary-label { color: var(--text-secondary); }
+.summary-value { color: var(--primary); font-weight: 700; }
+
+/* === История тренировок === */
+.history-list {
+    margin-bottom: 16px;
+}
+.history-card {
+    background: var(--surface);
+    border-radius: var(--radius-sm);
+    padding: 14px;
+    margin-bottom: 10px;
+    border-left: 3px solid var(--primary);
+}
+.history-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+.history-badge {
+    background: var(--primary);
+    color: white;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 0.78rem;
+    font-weight: 700;
+}
+.history-date {
+    font-size: 0.78rem;
+    color: var(--text-secondary);
+}
+.history-stat {
+    font-size: 0.85rem;
+    color: var(--text);
+    margin: 2px 0;
+}
+.empty-state {
+    text-align: center;
+    color: var(--text-secondary);
+    padding: 32px 16px;
+    font-style: italic;
+}
+
+/* === Адаптивность === */
+@media (max-width: 420px) {
+    h1 { font-size: 1.4rem; }
+    .exercise-name { font-size: 1.4rem; }
+    .param-value.big { font-size: 1.4rem; }
+    .exercise-params { grid-template-columns: repeat(2, 1fr); }
+    .timer-display-wrap { width: 120px; height: 120px; }
+    .rest-timer-display { font-size: 1.6rem; }
+}
+
+@media (max-width: 360px) {
+    #app { padding: 10px; }
+    .btn { font-size: 0.88rem; }
 }

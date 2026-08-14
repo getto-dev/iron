@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e1e1e"/>
+      <stop offset="100%" stop-color="#121212"/>
+    </linearGradient>
+    <linearGradient id="barbell" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ff5722"/>
+      <stop offset="100%" stop-color="#e64a19"/>
+    </linearGradient>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="8" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Фон -->
+  <rect width="512" height="512" rx="96" fill="url(#bg)"/>
+
+  <!-- Штанга с подсветкой -->
+  <g filter="url(#glow)">
+    <!-- Левый блин -->
+    <rect x="100" y="180" width="40" height="152" rx="6" fill="url(#barbell)"/>
+    <rect x="148" y="220" width="20" height="72" rx="3" fill="url(#barbell)"/>
+
+    <!-- Гриф -->
+    <rect x="168" y="246" width="176" height="20" rx="3" fill="#888"/>
+
+    <!-- Правый блин -->
+    <rect x="344" y="220" width="20" height="72" rx="3" fill="url(#barbell)"/>
+    <rect x="372" y="180" width="40" height="152" rx="6" fill="url(#barbell)"/>
+  </g>
+
+  <!-- Текст -->
+  <text x="256" y="410" font-family="Arial, sans-serif" font-size="64" font-weight="bold"
+        fill="#ff5722" text-anchor="middle" letter-spacing="4">GYMPRO</text>
+</svg>
