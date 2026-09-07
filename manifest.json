@@ -1,41 +1,18 @@
 {
-    "name": "GymPro Trainer — научный тренер",
-    "short_name": "GymPro",
-    "description": "Научно обоснованный персональный тренер для тренажёрного зала с поддержкой натуралов и фармакологически поддержанных атлетов. Расчёт по стандартам ACSM.",
-    "start_url": "./index.html",
-    "display": "standalone",
-    "orientation": "portrait",
-    "background_color": "#121212",
-    "theme_color": "#ff5722",
-    "lang": "ru",
-    "categories": ["fitness", "health", "sports"],
-    "icons": [
-        {
-            "src": "icons/icon.svg",
-            "sizes": "any",
-            "type": "image/svg+xml",
-            "purpose": "any"
-        },
-        {
-            "src": "icons/icon-192.png",
-            "sizes": "192x192",
-            "type": "image/png",
-            "purpose": "any maskable"
-        },
-        {
-            "src": "icons/icon-512.png",
-            "sizes": "512x512",
-            "type": "image/png",
-            "purpose": "any maskable"
-        }
-    ],
-    "shortcuts": [
-        {
-            "name": "Новая тренировка",
-            "short_name": "Тренировка",
-            "description": "Открыть анкету для расчёта программы",
-            "url": "./index.html?action=new",
-            "icons": [{"src": "icons/icon-192.png", "sizes": "192x192"}]
-        }
-    ]
+  "name": "GymPro Trainer v3 — evidence-based тренировки",
+  "short_name": "GymPro",
+  "description": "PWA для планирования и трекинга силовых тренировок с RIR, реальным тоннажом и авторегуляцией.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#121212",
+  "theme_color": "#ff5722",
+  "lang": "ru",
+  "categories": ["fitness", "sports"],
+  "icons": [
+    {"src":"icons/icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any"},
+    {"src":"icons/icon-192.png","sizes":"192x192","type":"image/png","purpose":"any maskable"},
+    {"src":"icons/icon-512.png","sizes":"512x512","type":"image/png","purpose":"any maskable"}
+  ],
+  "shortcuts": [{"name":"Новая тренировка","short_name":"Тренировка","url":"./index.html?action=new","icons":[{"src":"icons/icon-192.png","sizes":"192x192"}]}]
 }
